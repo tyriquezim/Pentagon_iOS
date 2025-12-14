@@ -7,7 +7,13 @@
 
 protocol AchievementObserver
 {
-    func updateAchievements(playerStats: PlayerProfile.PlayerStatistics) -> Array<Achievement>
+    func updateAchievements(playerProfile: PlayerProfile) -> Achievement?
     
-    func getAchievementList() -> Array<Achievement>
+    func addAchievement(key: Int, achievement: Achievement)
+    
+    func removeAchievement(key: Int)
+    
+    func getAchievement(key: Int) -> Achievement?
+    
+    func getAchievementArray() -> Array<Achievement>
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Achievement
+class Achievement: Comparable
 {
     var achievementTitle: String
     var achievementDescription: String
@@ -28,5 +28,16 @@ class Achievement
     {
         dateEarned = Date()
         hasBeenEarned = true
+    }
+    
+    //To conform to comparable
+    static func < (lhs: Achievement, rhs: Achievement) -> Bool
+    {
+        return lhs.achievementTitle < rhs.achievementTitle
+    }
+    
+    static func == (lhs: Achievement, rhs: Achievement) -> Bool
+    {
+        return lhs.achievementTitle == rhs.achievementTitle
     }
 }
