@@ -107,7 +107,11 @@ class GameBoardViewController: UIViewController
             
             if(self.gameController.gameBoard.isAgainstAiOpponent)
             {
-                self.handleAITurn()
+                DispatchQueue.main.asyncAfter(deadline: .now() + Duration.placeMarbleWait.rawValue)
+                {
+                    self.handleAITurn()
+                }
+                
             }
             else
             {
@@ -144,7 +148,10 @@ class GameBoardViewController: UIViewController
             
             if(self.gameController.gameBoard.isAgainstAiOpponent)
             {
-                self.handleAITurn()
+                DispatchQueue.main.asyncAfter(deadline: .now() + Duration.placeMarbleWait.rawValue)
+                {
+                    self.handleAITurn()
+                }
             }
             else
             {
@@ -514,7 +521,11 @@ class GameBoardViewController: UIViewController
                 }
             }
             
-            aiRotationAnimator!.startAnimation()
+            DispatchQueue.main.asyncAfter(deadline: .now() + Duration.rotateSubgridWait.rawValue)
+            {
+                aiRotationAnimator!.startAnimation()
+            }
+            
         }
         catch let GeneralException.IllegalArgument(message)
         {
