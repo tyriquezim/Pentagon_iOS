@@ -304,7 +304,7 @@ class GameBoardController
         }
     }
     
-    func aiPlaceMarble() throws -> (Int?, Int?)
+    func aiPlaceMarble() throws -> (rowIndex: Int?, columnIndex: Int?)
     {
         var rowIndex: Int = Int.random(in: 0...5)
         var columnIndex: Int = Int.random(in: 0...5)
