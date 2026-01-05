@@ -138,6 +138,22 @@ class PlayerProfile
     }
     
     //Player Statistics Wrappers
+    func updateWins() -> Array<Achievement>
+    {
+        return self.playerStats.updateWins()
+    }
+    func updateLosses() -> Array<Achievement>
+    {
+        return self.playerStats.updateLosses()
+    }
+    func updateDraws() -> Array<Achievement>
+    {
+        return self.playerStats.updateDraws()
+    }
+    func updateTotalMovesMade() -> Array<Achievement>
+    {
+        return self.playerStats.updateTotalMovesMade()
+    }
     func addAchievementObservers(achievementObservers: Array<AchievementObserver>)
     {
         self.playerStats.addAchievementObservers(achievementObservers: achievementObservers)

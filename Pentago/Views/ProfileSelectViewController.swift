@@ -21,6 +21,12 @@ class ProfileSelectViewController: UIViewController
         profileSelectCollectionView.dataSource = self
         profileSelectCollectionView.delegate = self
     }
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        
+    }
 }
 
 extension ProfileSelectViewController: UICollectionViewDelegate
@@ -35,10 +41,22 @@ extension ProfileSelectViewController: UICollectionViewDelegate
         if(nextScreen == .editProfileScreen && index.item == self.profileManager.getPlayerProfileArray().count)
         {
             let newProfile = PlayerProfile(userName: "NewPlayer", profilePicture: PlayerProfile.ProfilePicture.defaultIcon, marbleColour: Marble.MarbleColour.random())
-            let editProfileVC = storyboard!.instantiateViewController(withIdentifier: "StoryBoardEditProfileViewController") as! EditProfileViewController
-            editProfileVC.sourceProfile = newProfile
-            
-            self.navigationController!.pushViewController(editProfileVC, animated: true)
+            do
+            {
+                try self.profileManager.addPlayerProfile(newProfile: newProfile)
+                let editProfileVC = storyboard!.instantiateViewController(withIdentifier: "StoryBoardEditProfileViewController") as! EditProfileViewController
+                editProfileVC.sourceProfile = newProfile
+                
+                self.navigationController!.pushViewController(editProfileVC, animated: true)
+            }
+            catch let GeneralException.IllegalArgument(message)
+            {
+                fatalError(message)
+            }
+            catch
+            {
+                fatalError("Unaccounted for exception was thrown")
+            }
             
         }
         else

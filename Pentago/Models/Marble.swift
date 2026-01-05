@@ -18,17 +18,17 @@ struct Marble
         self.marbleColour = marbleColour
     }
     
-    enum MarbleColour: CaseIterable
+    enum MarbleColour: String, CaseIterable
     {
-        case black
-        case blue
-        case green
-        case orange
-        case pink
-        case purple
-        case red
-        case yellow
-        case grey
+        case black = "Black"
+        case blue = "Blue"
+        case green = "Green"
+        case orange = "Orange"
+        case pink = "Pink"
+        case purple = "Purple"
+        case red = "Red"
+        case yellow = "Yellow"
+        case grey = "Grey"
         
         static func random() -> MarbleColour
         {

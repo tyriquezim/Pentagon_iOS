@@ -91,11 +91,16 @@ class GameBoardViewController: UIViewController
         self.selectedSubgridCollectionView!.layer.cornerRadius = 0
         self.selectedSubgridCollectionView!.clipsToBounds = false
         
+        //Makes it so they cant be selected mid animation
+        self.upperLeftSubgrid.allowsSelection = false
+        self.upperRightSubgrid.allowsSelection = false
+        self.lowerLeftSubgrid.allowsSelection = false
+        self.lowerRightSubgrid.allowsSelection = false
+        
         var rotationAnimator: UIViewPropertyAnimator = createRotationAnimator(rotationDirection: .clockwise)
         
         rotationAnimator.addCompletion()
         {_ in
-            
             //Updates the indices that get passed to the GameController.placeMarble function after rotation
             for cell in self.selectedSubgridCollectionView!.visibleCells
             {
@@ -107,6 +112,9 @@ class GameBoardViewController: UIViewController
             
             if(self.gameController.gameBoard.isAgainstAiOpponent)
             {
+                self.gamePhase = .aiTurn
+                self.gameStatusLabel.text = GameStateInfoStore.aiMoveIndicator.rawValue
+                self.playerTurnLabel.text = self.gameController.gameBoard.currentTurnPlayerProfile.userName + GameStateInfoStore.playerTurnTrailing.rawValue
                 DispatchQueue.main.asyncAfter(deadline: .now() + Duration.placeMarbleWait.rawValue)
                 {
                     self.handleAITurn()
@@ -116,6 +124,13 @@ class GameBoardViewController: UIViewController
             else
             {
                 self.gamePhase = .placeMarble
+                
+                //Makes the cells interactable again
+                self.upperLeftSubgrid.allowsSelection = true
+                self.upperRightSubgrid.allowsSelection = true
+                self.lowerLeftSubgrid.allowsSelection = true
+                self.lowerRightSubgrid.allowsSelection = true
+                
                 self.gameStatusLabel.text = GameStateInfoStore.placeMarbleInstruction.rawValue
                 self.playerTurnLabel.text = self.gameController.gameBoard.currentTurnPlayerProfile.userName + GameStateInfoStore.playerTurnTrailing.rawValue
             }
@@ -137,6 +152,20 @@ class GameBoardViewController: UIViewController
         
         rotationAnimator.addCompletion()
         {_ in
+            self.rotationStackView.isHidden = true //Prevents more rotations being initiated
+            
+            //Removes the highlighting again incase the player tapped again
+            self.selectedSubgridCollectionView!.layer.borderWidth = 0
+            self.selectedSubgridCollectionView!.layer.borderColor = nil
+            self.selectedSubgridCollectionView!.layer.cornerRadius = 0
+            self.selectedSubgridCollectionView!.clipsToBounds = false
+            
+            //Makes it so they cant be selected mid animation
+            self.upperLeftSubgrid.allowsSelection = false
+            self.upperRightSubgrid.allowsSelection = false
+            self.lowerLeftSubgrid.allowsSelection = false
+            self.lowerRightSubgrid.allowsSelection = false
+            
             //Updates the indices that get passed to the GameController.placeMarble function after rotation
             for cell in self.selectedSubgridCollectionView!.visibleCells
             {
@@ -148,6 +177,9 @@ class GameBoardViewController: UIViewController
             
             if(self.gameController.gameBoard.isAgainstAiOpponent)
             {
+                self.gamePhase = .aiTurn
+                self.gameStatusLabel.text = GameStateInfoStore.aiMoveIndicator.rawValue
+                self.playerTurnLabel.text = self.gameController.gameBoard.currentTurnPlayerProfile.userName + GameStateInfoStore.playerTurnTrailing.rawValue
                 DispatchQueue.main.asyncAfter(deadline: .now() + Duration.placeMarbleWait.rawValue)
                 {
                     self.handleAITurn()
@@ -156,6 +188,12 @@ class GameBoardViewController: UIViewController
             else
             {
                 self.gamePhase = .placeMarble
+                
+                self.upperLeftSubgrid.allowsSelection = true
+                self.upperRightSubgrid.allowsSelection = true
+                self.lowerLeftSubgrid.allowsSelection = true
+                self.lowerRightSubgrid.allowsSelection = true
+                
                 self.gameStatusLabel.text = GameStateInfoStore.placeMarbleInstruction.rawValue
                 self.playerTurnLabel.text = self.gameController.gameBoard.currentTurnPlayerProfile.userName + GameStateInfoStore.playerTurnTrailing.rawValue
             }
@@ -390,9 +428,6 @@ class GameBoardViewController: UIViewController
         var aiRotationAnimator: UIViewPropertyAnimator? = nil
         var aiMoveInfo: (rowIndex: Int?, columnIndex: Int?)
         var aiRotateInfo: (subgrid: GameBoard.Subgrid?, rotationDirection: GameBoard.RotationDirection?) = (nil, nil)
-        self.gamePhase = .aiTurn
-        self.gameStatusLabel.text = "Computing..."
-        self.playerTurnLabel.text = self.gameController.gameBoard.currentTurnPlayerProfile.userName + GameStateInfoStore.playerTurnTrailing.rawValue
         
         do
         {
@@ -483,6 +518,12 @@ class GameBoardViewController: UIViewController
             {_ in
         
                 self.gamePhase = .placeMarble
+                
+                self.upperLeftSubgrid.allowsSelection = true
+                self.upperRightSubgrid.allowsSelection = true
+                self.lowerLeftSubgrid.allowsSelection = true
+                self.lowerRightSubgrid.allowsSelection = true
+                
                 self.gameStatusLabel.text = GameStateInfoStore.placeMarbleInstruction.rawValue
                 self.playerTurnLabel.text = self.gameController.gameBoard.currentTurnPlayerProfile.userName + GameStateInfoStore.playerTurnTrailing.rawValue
                 

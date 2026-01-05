@@ -333,6 +333,7 @@
                                 <rect key="frame" x="26" y="257" width="140" height="22.333333333333314"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="9XB-fu-VWY"/>
+                                    <constraint firstAttribute="height" constant="22.329999999999998" id="kXP-9L-oEt"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="Username">
@@ -432,7 +433,7 @@
                                                         </children>
                                                     </menu>
                                                     <state key="normal" title="">
-                                                        <color key="titleColor" systemColor="systemIndigoColor"/>
+                                                        <color key="titleColor" systemColor="systemBlueColor"/>
                                                     </state>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xjn-bo-vEs">
@@ -464,7 +465,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ER-Rg-NKt">
                                 <rect key="frame" x="227" y="257" width="140" height="22.333333333333314"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="bZ9-IE-UKZ"/>
+                                    <constraint firstAttribute="height" constant="22.329999999999998" id="0OU-fG-bEG"/>
                                     <constraint firstAttribute="width" constant="140" id="d7p-93-fkA"/>
                                 </constraints>
                                 <attributedString key="attributedText">
@@ -478,13 +479,17 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rU-sw-pZv">
-                                <rect key="frame" x="66.666666666666671" y="284.33333333333331" width="59" height="19.666666666666686"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rU-sw-pZv">
+                                <rect key="frame" x="26" y="284.33333333333331" width="140" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="BKx-HJ-QOq"/>
+                                    <constraint firstAttribute="height" constant="60" id="Thh-Tm-qs0"/>
+                                </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="PlayerID">
                                         <attributes>
                                             <color key="NSColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="15" name="Futura-Medium"/>
+                                            <font key="NSFont" size="12" name="Futura-Medium"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -502,7 +507,6 @@
                             <constraint firstItem="9rU-sw-pZv" firstAttribute="centerX" secondItem="fmE-LG-2Ri" secondAttribute="centerX" id="CBd-hY-y4b"/>
                             <constraint firstItem="5ER-Rg-NKt" firstAttribute="centerY" secondItem="fmE-LG-2Ri" secondAttribute="centerY" id="FXf-Gy-2cd"/>
                             <constraint firstItem="fmE-LG-2Ri" firstAttribute="centerX" secondItem="1Yw-ec-aHP" secondAttribute="centerX" id="NgF-q4-Nan"/>
-                            <constraint firstItem="5ER-Rg-NKt" firstAttribute="top" secondItem="Wg1-0G-AV8" secondAttribute="bottom" constant="8" id="OhE-rQ-GZp"/>
                             <constraint firstItem="1Yw-ec-aHP" firstAttribute="leading" secondItem="xNW-Sh-gUl" secondAttribute="leadingMargin" constant="10" id="WP8-1R-NPf"/>
                             <constraint firstItem="5ER-Rg-NKt" firstAttribute="centerX" secondItem="Wg1-0G-AV8" secondAttribute="centerX" id="Xge-Xg-d6Y"/>
                             <constraint firstItem="eOf-6i-LIl" firstAttribute="trailing" secondItem="aYz-j6-wES" secondAttribute="trailing" id="Xi5-VR-WEX"/>
@@ -517,6 +521,7 @@
                     <connections>
                         <outlet property="colourLabel" destination="5ER-Rg-NKt" id="BZX-cj-MEA"/>
                         <outlet property="marbleColourImageView" destination="Wg1-0G-AV8" id="bMy-X6-dl0"/>
+                        <outlet property="playerIDLabel" destination="9rU-sw-pZv" id="FXO-jP-BXs"/>
                         <outlet property="profileEditTableView" destination="eOf-6i-LIl" id="SI9-lw-cix"/>
                         <outlet property="profilePictureImageView" destination="1Yw-ec-aHP" id="A23-HD-m7z"/>
                         <outlet property="usernameLabel" destination="fmE-LG-2Ri" id="Hqo-OR-cBk"/>
@@ -1764,6 +1769,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
             <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
