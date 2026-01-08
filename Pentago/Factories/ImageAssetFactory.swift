@@ -280,4 +280,35 @@ struct ImageAssetFactory
         
         return cellImage
     }
+    
+    static func getMarbleColourUIImage(colour: Marble.MarbleColour) -> UIImage
+    {
+        var colourImage: UIImage
+        
+        switch colour
+        {
+            case .black:
+                colourImage = UIImage(named: "marble_black")!
+            case .blue:
+                colourImage = UIImage(named: "marble_blue")!
+            case .green:
+                colourImage = UIImage(named: "marble_green")!
+            case .grey:
+                colourImage = UIImage(named: "marble_grey")!
+            case .orange:
+                colourImage = UIImage(named: "marble_orange")!
+            case .pink:
+                colourImage = UIImage(named: "marble_pink")!
+            case .purple:
+                colourImage = UIImage(named: "marble_purple")!
+            case .red:
+                colourImage = UIImage(named: "marble_red")!
+            case .yellow:
+                colourImage = UIImage(named: "marble_yellow")!
+            default:
+                fatalError("Unexpected colour in getMarbleColourUIImage")
+        }
+        
+        return colourImage
+    }
 }

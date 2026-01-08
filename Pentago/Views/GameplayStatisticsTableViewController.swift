@@ -16,6 +16,7 @@ class GameplayStatisticsTableViewController: UITableViewController
         nf.numberStyle = .percent
         nf.minimumFractionDigits = 0
         nf.maximumFractionDigits = 1
+        
         return nf
     }()
     

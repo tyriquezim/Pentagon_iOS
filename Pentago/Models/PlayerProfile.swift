@@ -60,10 +60,18 @@ class PlayerProfile
                         profile._isLocalPlayer1 = false //set all other profiles to false
                     }
                 }
+                if(self.isLocalPlayer2) //Cant be player 1 and 2 at once
+                {
+                    self.isLocalPlayer2 = false
+                }
                 self._isLocalPlayer1 = true
             }
             else
             {
+                if(newValue && self.isLocalPlayer2) //Cant be player 1 and 2 at once
+                {
+                    self.isLocalPlayer2 = false
+                }
                 self._isLocalPlayer1 = newValue
             }
         }
@@ -86,10 +94,18 @@ class PlayerProfile
                         profile._isLocalPlayer2 = false
                     }
                 }
+                if(self.isLocalPlayer1)
+                {
+                    self.isLocalPlayer1 = false
+                }
                 self._isLocalPlayer2 = true
             }
             else
             {
+                if(newValue && self.isLocalPlayer1) //Cant be player 1 and 2 at once
+                {
+                    self.isLocalPlayer1 = false
+                }
                 self._isLocalPlayer2 = newValue
             }
         }
@@ -312,19 +328,19 @@ class PlayerProfile
         }
     }
     
-    enum ProfilePicture
+    enum ProfilePicture: String
     {
-        case beach
-        case cpuRobot
-        case defaultIcon
-        case desert
-        case giraffe
-        case lion
-        case mountain
-        case ostrich
-        case puppy
-        case tiger
-        case tree
-        case zebra
+        case beach = "Beach"
+        case cpuRobot = "CPU"
+        case defaultIcon = "Default"
+        case desert = "Desert"
+        case giraffe = "Giraffe"
+        case lion = "Lion"
+        case mountain = "Mountain"
+        case ostrich = "Ostrich"
+        case puppy = "Puppy"
+        case tiger = "Tiger"
+        case tree = "Tree"
+        case zebra = "Zebra"
     }
 }

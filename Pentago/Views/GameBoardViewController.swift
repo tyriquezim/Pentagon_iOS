@@ -148,6 +148,13 @@ class GameBoardViewController: UIViewController
         self.selectedSubgridCollectionView!.layer.cornerRadius = 0
         self.selectedSubgridCollectionView!.clipsToBounds = false
         
+        //Makes it so they cant be selected mid animation
+        self.upperLeftSubgrid.allowsSelection = false
+        self.upperRightSubgrid.allowsSelection = false
+        self.lowerLeftSubgrid.allowsSelection = false
+        self.lowerRightSubgrid.allowsSelection = false
+        
+        
         var rotationAnimator: UIViewPropertyAnimator = createRotationAnimator(rotationDirection: .anticlockwise) //Returns an animator that rotates the selected subgrid
         
         rotationAnimator.addCompletion()
@@ -159,12 +166,6 @@ class GameBoardViewController: UIViewController
             self.selectedSubgridCollectionView!.layer.borderColor = nil
             self.selectedSubgridCollectionView!.layer.cornerRadius = 0
             self.selectedSubgridCollectionView!.clipsToBounds = false
-            
-            //Makes it so they cant be selected mid animation
-            self.upperLeftSubgrid.allowsSelection = false
-            self.upperRightSubgrid.allowsSelection = false
-            self.lowerLeftSubgrid.allowsSelection = false
-            self.lowerRightSubgrid.allowsSelection = false
             
             //Updates the indices that get passed to the GameController.placeMarble function after rotation
             for cell in self.selectedSubgridCollectionView!.visibleCells
@@ -214,7 +215,7 @@ class GameBoardViewController: UIViewController
                 
                 rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                 {
-                    self.selectedSubgridCollectionView?.transform = CGAffineTransform(rotationAngle: self.upperLeftSubgridRotationMultiplier)
+                    self.selectedSubgridCollectionView!.transform = CGAffineTransform(rotationAngle: self.upperLeftSubgridRotationMultiplier)
                 }
             }
             else
@@ -226,7 +227,7 @@ class GameBoardViewController: UIViewController
                     
                     rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                     {
-                        self.selectedSubgridCollectionView?.transform = CGAffineTransform(rotationAngle: self.upperRightSubgridRotationMultiplier)
+                        self.selectedSubgridCollectionView!.transform = CGAffineTransform(rotationAngle: self.upperRightSubgridRotationMultiplier)
                     }
                 }
                 else
@@ -238,7 +239,7 @@ class GameBoardViewController: UIViewController
                         
                         rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                         {
-                            self.selectedSubgridCollectionView?.transform = CGAffineTransform(rotationAngle: self.lowerLeftSubgridRotationMultiplier)
+                            self.selectedSubgridCollectionView!.transform = CGAffineTransform(rotationAngle: self.lowerLeftSubgridRotationMultiplier)
                         }
                     }
                     else
@@ -250,7 +251,7 @@ class GameBoardViewController: UIViewController
                             
                             rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                             {
-                                self.selectedSubgridCollectionView?.transform = CGAffineTransform(rotationAngle: self.lowerRightSubgridRotationMultiplier)
+                                self.selectedSubgridCollectionView!.transform = CGAffineTransform(rotationAngle: self.lowerRightSubgridRotationMultiplier)
                             }
                         }
                     }
@@ -268,7 +269,7 @@ class GameBoardViewController: UIViewController
                     
                     rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                     {
-                        self.selectedSubgridCollectionView?.transform = CGAffineTransform(rotationAngle: self.upperLeftSubgridRotationMultiplier)
+                        self.selectedSubgridCollectionView!.transform = CGAffineTransform(rotationAngle: self.upperLeftSubgridRotationMultiplier)
                     }
                 }
                 else
@@ -280,7 +281,7 @@ class GameBoardViewController: UIViewController
                         
                         rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                         {
-                            self.selectedSubgridCollectionView?.transform = CGAffineTransform(rotationAngle: self.upperRightSubgridRotationMultiplier)
+                            self.selectedSubgridCollectionView!.transform = CGAffineTransform(rotationAngle: self.upperRightSubgridRotationMultiplier)
                         }
                     }
                     else
@@ -292,7 +293,7 @@ class GameBoardViewController: UIViewController
                             
                             rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                             {
-                                self.selectedSubgridCollectionView?.transform = CGAffineTransform(rotationAngle: self.lowerLeftSubgridRotationMultiplier)
+                                self.selectedSubgridCollectionView!.transform = CGAffineTransform(rotationAngle: self.lowerLeftSubgridRotationMultiplier)
                             }
                         }
                         else
@@ -304,7 +305,7 @@ class GameBoardViewController: UIViewController
                                 
                                 rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                                 {
-                                    self.selectedSubgridCollectionView?.transform = CGAffineTransform(rotationAngle: self.lowerRightSubgridRotationMultiplier)
+                                    self.selectedSubgridCollectionView!.transform = CGAffineTransform(rotationAngle: self.lowerRightSubgridRotationMultiplier)
                                 }
                             }
                         }
@@ -312,7 +313,7 @@ class GameBoardViewController: UIViewController
                 }
             }
         }
-        
+    
         return rotationAnimator!
     }
     
@@ -378,7 +379,7 @@ class GameBoardViewController: UIViewController
                     
                     rotationAnimator = UIViewPropertyAnimator(duration: Duration.gridRotationDuration.rawValue, curve: .easeInOut)
                     {
-                        self.upperRightSubgrid.transform = CGAffineTransform(rotationAngle: self.upperLeftSubgridRotationMultiplier)
+                        self.upperLeftSubgrid.transform = CGAffineTransform(rotationAngle: self.upperLeftSubgridRotationMultiplier)
                     }
                 }
                 else
@@ -450,9 +451,6 @@ class GameBoardViewController: UIViewController
                         castedCell.cellImageView.image = ImageAssetFactory.getGameBoardCellUIImage(cellType: castedCell.initialCellType, colour: self.gameController.gameBoard.currentTurnPlayerProfile.marbleColour)
                     }
                 }
-                
-                aiRotateInfo = self.gameController.aiRotateSubgrid()
-                aiRotationAnimator = self.createAIRotationAnimator(subgrid: aiRotateInfo.subgrid!, rotationDirection: aiRotateInfo.rotationDirection!)
             }
             else
             {
@@ -469,9 +467,6 @@ class GameBoardViewController: UIViewController
                             castedCell.cellImageView.image = ImageAssetFactory.getGameBoardCellUIImage(cellType: castedCell.initialCellType, colour: self.gameController.gameBoard.currentTurnPlayerProfile.marbleColour)
                         }
                     }
-                    
-                    aiRotateInfo = self.gameController.aiRotateSubgrid()
-                    aiRotationAnimator = self.createAIRotationAnimator(subgrid: aiRotateInfo.subgrid!, rotationDirection: aiRotateInfo.rotationDirection!)
                 }
                 else
                 {
@@ -488,9 +483,6 @@ class GameBoardViewController: UIViewController
                                 castedCell.cellImageView.image = ImageAssetFactory.getGameBoardCellUIImage(cellType: castedCell.initialCellType, colour: self.gameController.gameBoard.currentTurnPlayerProfile.marbleColour)
                             }
                         }
-                        
-                        aiRotateInfo = self.gameController.aiRotateSubgrid()
-                        aiRotationAnimator = self.createAIRotationAnimator(subgrid: aiRotateInfo.subgrid!, rotationDirection: aiRotateInfo.rotationDirection!)
                     }
                     else
                     {
@@ -507,13 +499,13 @@ class GameBoardViewController: UIViewController
                                     castedCell.cellImageView.image = ImageAssetFactory.getGameBoardCellUIImage(cellType: castedCell.initialCellType, colour: self.gameController.gameBoard.currentTurnPlayerProfile.marbleColour)
                                 }
                             }
-                            
-                            aiRotateInfo = self.gameController.aiRotateSubgrid()
-                            aiRotationAnimator = self.createAIRotationAnimator(subgrid: aiRotateInfo.subgrid!, rotationDirection: aiRotateInfo.rotationDirection!)
                         }
                     }
                 }
             }
+            
+            aiRotateInfo = self.gameController.aiRotateSubgrid()
+            aiRotationAnimator = self.createAIRotationAnimator(subgrid: aiRotateInfo.subgrid!, rotationDirection: aiRotateInfo.rotationDirection!)
             aiRotationAnimator!.addCompletion()
             {_ in
         
@@ -624,10 +616,7 @@ extension GameBoardViewController: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt index: IndexPath)
     {
         let cell = collectionView.cellForItem(at: index) as! GameBoardCollectionViewCell
-        print(cell.currentCellType)
-        print(cell.gameBoardRowIndex)
-        print(cell.gameBoardColumnIndex)
-        print(gameController.gameBoard.gameGrid[cell.gameBoardRowIndex][cell.gameBoardColumnIndex])
+        
         if(gamePhase == .placeMarble)
         {
             do

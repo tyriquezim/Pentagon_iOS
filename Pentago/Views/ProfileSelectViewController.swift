@@ -22,6 +22,13 @@ class ProfileSelectViewController: UIViewController
         profileSelectCollectionView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        self.profileSelectCollectionView.reloadData() //Updates any changes from the edit screen
+    }
+    
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
@@ -44,6 +51,7 @@ extension ProfileSelectViewController: UICollectionViewDelegate
             do
             {
                 try self.profileManager.addPlayerProfile(newProfile: newProfile)
+                
                 let editProfileVC = storyboard!.instantiateViewController(withIdentifier: "StoryBoardEditProfileViewController") as! EditProfileViewController
                 editProfileVC.sourceProfile = newProfile
                 
