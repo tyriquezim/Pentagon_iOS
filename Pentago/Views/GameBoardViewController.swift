@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SimpleToast
 
 class GameBoardViewController: UIViewController
 {
@@ -695,53 +696,53 @@ extension GameBoardViewController: UICollectionViewDataSource
         
         switch indexPath.item
         {
-            case 0:
-                cell.initialCellType = .topLeftCell
-                cell.currentCellType = .topLeftCell
-                rowIndex = 0
-                columnIndex = 0
-            case 1:
-                cell.initialCellType = .topMiddleCell
-                cell.currentCellType = .topMiddleCell
-                rowIndex = 0
-                columnIndex = 1
-            case 2:
-                cell.initialCellType = .topRightCell
-                cell.currentCellType = .topRightCell
-                rowIndex = 0
-                columnIndex = 2
-            case 3:
-                cell.initialCellType = .middleLeftCell
-                cell.currentCellType = .middleLeftCell
-                rowIndex = 1
-                columnIndex = 0
-            case 4:
-                cell.initialCellType = .middleMiddleCell
-                cell.currentCellType = .middleMiddleCell
-                rowIndex = 1
-                columnIndex = 1
-            case 5:
-                cell.initialCellType = .middleRightCell
-                cell.currentCellType = .middleRightCell
-                rowIndex = 1
-                columnIndex = 2
-            case 6:
-                cell.initialCellType = .bottomLeftCell
-                cell.currentCellType = .bottomLeftCell
-                rowIndex = 2
-                columnIndex = 0
-            case 7:
-                cell.initialCellType = .bottomMiddleCell
-                cell.currentCellType = .bottomMiddleCell
-                rowIndex = 2
-                columnIndex = 1
-            case 8:
-                cell.initialCellType = .bottomRightCell
-                cell.currentCellType = .bottomRightCell
-                rowIndex = 2
-                columnIndex = 2
-            default:
-                fatalError("There should only be 9 items in the collection view")
+        case 0:
+            cell.initialCellType = .topLeftCell
+            cell.currentCellType = .topLeftCell
+            rowIndex = 0
+            columnIndex = 0
+        case 1:
+            cell.initialCellType = .topMiddleCell
+            cell.currentCellType = .topMiddleCell
+            rowIndex = 0
+            columnIndex = 1
+        case 2:
+            cell.initialCellType = .topRightCell
+            cell.currentCellType = .topRightCell
+            rowIndex = 0
+            columnIndex = 2
+        case 3:
+            cell.initialCellType = .middleLeftCell
+            cell.currentCellType = .middleLeftCell
+            rowIndex = 1
+            columnIndex = 0
+        case 4:
+            cell.initialCellType = .middleMiddleCell
+            cell.currentCellType = .middleMiddleCell
+            rowIndex = 1
+            columnIndex = 1
+        case 5:
+            cell.initialCellType = .middleRightCell
+            cell.currentCellType = .middleRightCell
+            rowIndex = 1
+            columnIndex = 2
+        case 6:
+            cell.initialCellType = .bottomLeftCell
+            cell.currentCellType = .bottomLeftCell
+            rowIndex = 2
+            columnIndex = 0
+        case 7:
+            cell.initialCellType = .bottomMiddleCell
+            cell.currentCellType = .bottomMiddleCell
+            rowIndex = 2
+            columnIndex = 1
+        case 8:
+            cell.initialCellType = .bottomRightCell
+            cell.currentCellType = .bottomRightCell
+            rowIndex = 2
+            columnIndex = 2
+        default:
+            fatalError("There should only be 9 items in the collection view")
         }
         
         if(collectionView === upperLeftSubgrid)

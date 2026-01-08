@@ -15,6 +15,7 @@ class EditProfileViewController: UIViewController
     @IBOutlet var colourLabel: UILabel!
     @IBOutlet var playerIDLabel: UILabel!
     @IBOutlet var profileEditTableView: UITableView!
+    var activeTextField: UITextField? //Stores the textField instance currently being used by the user
     
     var sourceProfile: PlayerProfile!
     
@@ -29,6 +30,11 @@ class EditProfileViewController: UIViewController
         self.profileEditTableView.dataSource = self
         self.profileEditTableView.delegate = self
         self.profileEditTableView.isScrollEnabled = false
+        
+        self.activeTextField = nil
+        
+        let dismissKeyboardTapRecog = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(dismissKeyboardTapRecog)
     }
 }
 
@@ -54,6 +60,7 @@ extension EditProfileViewController: UITableViewDataSource
             
             textFieldCell.fieldTitleLabel.text = "Username"
             textFieldCell.textField.delegate = self
+            textFieldCell.textField.text = self.sourceProfile.userName
             
             cell = textFieldCell
         }
@@ -339,5 +346,29 @@ extension EditProfileViewController: UITableViewDataSource
     
 extension EditProfileViewController: UITextFieldDelegate
 {
+    func textFieldDidBeginEditing(_ textField: UITextField)
+    {
+        self.activeTextField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        self.sourceProfile.userName = textField.text ?? ""
+        self.usernameLabel.text = textField.text
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder() //Removes the keyboard
         
+        return true
+    }
+    
+    @objc func dismissKeyboard()
+    {
+        if let checkedTextField = activeTextField
+        {
+            checkedTextField.resignFirstResponder()
+        }
+    }
 }
