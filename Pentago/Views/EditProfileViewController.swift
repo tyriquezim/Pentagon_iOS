@@ -18,6 +18,8 @@ class EditProfileViewController: UIViewController
     var activeTextField: UITextField? //Stores the textField instance currently being used by the user
     
     var sourceProfile: PlayerProfile!
+    var existingUsernames: Array<String>!
+    var defaultUsername: String!
     
     override func viewDidLoad()
     {
@@ -35,6 +37,35 @@ class EditProfileViewController: UIViewController
         
         let dismissKeyboardTapRecog = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(dismissKeyboardTapRecog)
+        
+        self.navigationItem.backAction = UIAction
+        {_ in
+            self.onBackButtonTap()
+        }
+    }
+    
+    func onBackButtonTap()
+    {
+        if(self.sourceProfile.userName == self.defaultUsername)
+        {
+            let alert = UIAlertController(title: "Change Username", message: "The username cannot be \"\(String(describing: self.defaultUsername!))\".", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            print(self.sourceProfile.userName)
+            if(self.existingUsernames.contains(self.sourceProfile.userName))
+            {
+                let alert = UIAlertController(title: "Change Username", message: "The username, \"\(self.sourceProfile.userName)\" is already in use.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else
+            {
+               // self.navigationController!.popViewController(animated: true)
+            }
+        }
     }
 }
 

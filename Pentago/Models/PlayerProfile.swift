@@ -10,36 +10,6 @@ class PlayerProfile
 {
     let playerID: UUID
     var userName: String
-    {
-        get
-        {
-            return self._userName
-        }
-        set(newValue) //Will not set the value if the PlayerProfileManager already has a PlayerProfile with that userName
-        {
-            if let checkedManager = manager
-            {
-                var isUserNameUnique = true
-            
-                for profile in checkedManager.getPlayerProfileArray()
-                {
-                    if(profile.userName == newValue)
-                    {
-                        isUserNameUnique = false
-                    }
-                }
-                
-                if(isUserNameUnique) //If it isnt unique, the username does not change
-                {
-                    self._userName = newValue
-                }
-            }
-            else
-            {
-                self._userName = newValue // set as normal if there is no manager
-            }
-        }
-    }
     var profilePicture: ProfilePicture
     var marbleColour: Marble.MarbleColour
     var isLocalPlayer1: Bool
@@ -123,14 +93,12 @@ class PlayerProfile
     weak var manager: PlayerProfileManager?
     
     //Backing stores
-    private var _userName: String
     private var _isLocalPlayer1: Bool
     private var _isLocalPlayer2: Bool
     
     init(userName: String, profilePicture: ProfilePicture, marbleColour: Marble.MarbleColour)
     {
         self.playerID = UUID()
-        self._userName = userName
         self.profilePicture = profilePicture
         self.marbleColour = marbleColour
         self._isLocalPlayer1 = false

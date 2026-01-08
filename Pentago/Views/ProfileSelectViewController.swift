@@ -12,6 +12,7 @@ class ProfileSelectViewController: UIViewController
     
     var profileManager: PlayerProfileManager!
     var nextScreen: MainMenuViewController.ProfileSelectScreenDestination!
+    let defaultUsername: String = "NewPlayer"
     
     override func viewDidLoad()
     {
@@ -47,13 +48,23 @@ extension ProfileSelectViewController: UICollectionViewDelegate
     {
         if(nextScreen == .editProfileScreen && index.item == self.profileManager.getPlayerProfileArray().count)
         {
-            let newProfile = PlayerProfile(userName: "NewPlayer", profilePicture: PlayerProfile.ProfilePicture.defaultIcon, marbleColour: Marble.MarbleColour.random())
+            let newProfile = PlayerProfile(userName: self.defaultUsername, profilePicture: PlayerProfile.ProfilePicture.defaultIcon, marbleColour: Marble.MarbleColour.random(caseArray: [.black, .blue, .green, .orange, .pink, .purple, .red, .yellow]))
+            
+            var existingUsernames: Array<String> = Array()
+            
+            for profile in self.profileManager.getPlayerProfileArray()
+            {
+                existingUsernames.append(profile.userName)
+            }
+            
             do
             {
                 try self.profileManager.addPlayerProfile(newProfile: newProfile)
                 
                 let editProfileVC = storyboard!.instantiateViewController(withIdentifier: "StoryBoardEditProfileViewController") as! EditProfileViewController
                 editProfileVC.sourceProfile = newProfile
+                editProfileVC.existingUsernames = existingUsernames
+                editProfileVC.defaultUsername = self.defaultUsername
                 
                 self.navigationController!.pushViewController(editProfileVC, animated: true)
             }
@@ -72,8 +83,22 @@ extension ProfileSelectViewController: UICollectionViewDelegate
             if(nextScreen == .editProfileScreen && index.item != self.profileManager.getPlayerProfileArray().count)
             {
                 let designatedProfile = self.profileManager.getPlayerProfile(index: index.item)
+                
+                var existingUsernames: Array<String> = Array()
+                
+                for profile in self.profileManager.getPlayerProfileArray()
+                {
+                    if(profile !== designatedProfile) //Only append profile usernames not including the one being passed
+                    {
+                        existingUsernames.append(profile.userName)
+                    }
+                }
+                
                 let editProfileVC = storyboard!.instantiateViewController(withIdentifier: "StoryBoardEditProfileViewController") as! EditProfileViewController
+                print(existingUsernames)
                 editProfileVC.sourceProfile = designatedProfile
+                editProfileVC.existingUsernames = existingUsernames
+                editProfileVC.defaultUsername = self.defaultUsername
             
                 self.navigationController!.pushViewController(editProfileVC, animated: true)
             }
