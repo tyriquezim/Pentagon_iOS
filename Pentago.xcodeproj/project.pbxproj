@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		B8B66BEF2F0F9C5E007F4054 /* SimpleToast in Frameworks */ = {isa = PBXBuildFile; productRef = B8B66BEE2F0F9C5E007F4054 /* SimpleToast */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		B876B7792EE402C4005EB123 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -69,7 +65,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8B66BEF2F0F9C5E007F4054 /* SimpleToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +125,6 @@
 			);
 			name = Pentago;
 			packageProductDependencies = (
-				B8B66BEE2F0F9C5E007F4054 /* SimpleToast */,
 			);
 			productName = Pentago;
 			productReference = B876B7622EE402C1005EB123 /* Pentago.app */;
@@ -215,7 +209,6 @@
 			mainGroup = B876B7592EE402C1005EB123;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				B8B66BED2F0F9C5E007F4054 /* XCRemoteSwiftPackageReference "SimpleToast" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B876B7632EE402C1005EB123 /* Products */;
@@ -580,25 +573,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		B8B66BED2F0F9C5E007F4054 /* XCRemoteSwiftPackageReference "SimpleToast" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sanzaru/SimpleToast";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.12.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		B8B66BEE2F0F9C5E007F4054 /* SimpleToast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B8B66BED2F0F9C5E007F4054 /* XCRemoteSwiftPackageReference "SimpleToast" */;
-			productName = SimpleToast;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B876B75A2EE402C1005EB123 /* Project object */;
 }

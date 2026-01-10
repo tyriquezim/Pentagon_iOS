@@ -34,6 +34,10 @@ class GameBoardViewController: UIViewController
     var lowerLeftSubgridRotationMultiplier: CGFloat!
     var lowerRightSubgridRotationMultiplier: CGFloat!
     
+    var snackbarFrame: CGRect!
+    var snackbarPopUpFrame: CGRect!
+    var snackbarQueue: Array<SnackbarView>!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -79,6 +83,17 @@ class GameBoardViewController: UIViewController
         
         self.clockwiseImageView.addGestureRecognizer(clockwiseTapRecog)
         self.anticlockwiseImageView.addGestureRecognizer(anticlockiwiseTapRecog)
+        
+        let snackbarWidth = (view.frame.width / 1.5) //centre
+        let snackbarHeight = CGFloat(60)
+        let snackbarX = (view.frame.width - snackbarWidth) / 2
+        let snackbarY = view.frame.height
+        
+        self.snackbarFrame = CGRect(x: snackbarX, y: snackbarY, width: snackbarWidth, height: snackbarHeight)
+        
+        self.snackbarPopUpFrame = CGRect(x: snackbarX, y: snackbarY - 70, width: snackbarWidth, height: snackbarHeight)
+        
+        snackbarQueue = Array()
     }
     
     //Passing nil means it will rotate the selected one
@@ -136,6 +151,7 @@ class GameBoardViewController: UIViewController
                 self.playerTurnLabel.text = self.gameController.gameBoard.currentTurnPlayerProfile.userName + GameStateInfoStore.playerTurnTrailing.rawValue
             }
         }
+        self.gamePhase = .animationOccuring
         rotationAnimator.startAnimation()
     }
     
@@ -200,6 +216,7 @@ class GameBoardViewController: UIViewController
                 self.playerTurnLabel.text = self.gameController.gameBoard.currentTurnPlayerProfile.userName + GameStateInfoStore.playerTurnTrailing.rawValue
             }
         }
+        self.gamePhase = .animationOccuring
         rotationAnimator.startAnimation()
     }
     
@@ -557,6 +574,7 @@ class GameBoardViewController: UIViewController
             
             DispatchQueue.main.asyncAfter(deadline: .now() + Duration.rotateSubgridWait.rawValue)
             {
+                self.gamePhase = .animationOccuring
                 aiRotationAnimator!.startAnimation()
             }
             
@@ -581,12 +599,158 @@ class GameBoardViewController: UIViewController
         }
     }
     
+    func onSubgridRotate()
+    {
+        let winner: PlayerProfile? = self.gameController.checkWinConditionPostRotation()
+        
+        if(winner != nil)
+        {
+            self.playerTurnLabel.text = winner!.userName + GameStateInfoStore.playerWinTrailing.rawValue
+            self.gameStatusLabel.text = GameStateInfoStore.gameOver.rawValue
+            self.upperLeftSubgrid.isUserInteractionEnabled = false
+            self.upperRightSubgrid.isUserInteractionEnabled = false
+            self.lowerLeftSubgrid.isUserInteractionEnabled = false
+            self.lowerRightSubgrid.isUserInteractionEnabled = false
+            self.rotationStackView.isHidden = false
+            self.gamePhase = .gameOver
+            
+            let achievements = winner!.updateWins()
+            
+            if(!achievements.isEmpty)
+            {
+                onAchievementEarned(playerProfile: winner!, achievementsEarned: achievements)
+            }
+            
+            if(winner === self.gameController.gameBoard.player1Profile)
+            {
+                let achievements = self.gameController.gameBoard.player2Profile.updateLosses()
+                
+                if(!achievements.isEmpty)
+                {
+                    onAchievementEarned(playerProfile: self.gameController.gameBoard.player2Profile, achievementsEarned: achievements)
+                }
+            }
+            else
+            {
+                if(winner === self.gameController.gameBoard.player2Profile)
+                {
+                    let achievements = self.gameController.gameBoard.player1Profile.updateLosses()
+                    
+                    if(!achievements.isEmpty)
+                    {
+                        onAchievementEarned(playerProfile: self.gameController.gameBoard.player1Profile, achievementsEarned: achievements)
+                    }
+                }
+            }
+        }
+    }
+    
+    func onMarblePlace(rowIndex: Int, columnIndex: Int)
+    {
+        let winner: PlayerProfile? = self.gameController.checkWinCondition(rowIndex: rowIndex, columnIndex: columnIndex)
+        
+        if(winner != nil)
+        {
+            self.playerTurnLabel.text = winner!.userName + GameStateInfoStore.playerWinTrailing.rawValue
+            self.gameStatusLabel.text = GameStateInfoStore.gameOver.rawValue
+            self.upperLeftSubgrid.isUserInteractionEnabled = false
+            self.upperRightSubgrid.isUserInteractionEnabled = false
+            self.lowerLeftSubgrid.isUserInteractionEnabled = false
+            self.lowerRightSubgrid.isUserInteractionEnabled = false
+            self.rotationStackView.isHidden = false
+            self.gamePhase = .gameOver
+            
+            let achievements = winner!.updateWins()
+            
+            if(!achievements.isEmpty)
+            {
+                onAchievementEarned(playerProfile: winner!, achievementsEarned: achievements)
+            }
+            
+            if(winner === self.gameController.gameBoard.player1Profile)
+            {
+                let achievements = self.gameController.gameBoard.player2Profile.updateLosses()
+                
+                if(!achievements.isEmpty)
+                {
+                    onAchievementEarned(playerProfile: self.gameController.gameBoard.player2Profile, achievementsEarned: achievements)
+                }
+            }
+            else
+            {
+                if(winner === self.gameController.gameBoard.player2Profile)
+                {
+                    let achievements = self.gameController.gameBoard.player1Profile.updateLosses()
+                    
+                    if(!achievements.isEmpty)
+                    {
+                        onAchievementEarned(playerProfile: self.gameController.gameBoard.player1Profile, achievementsEarned: achievements)
+                    }
+                }
+            }
+        }
+    }
+    
+    func onDraw()
+    {
+        self.playerTurnLabel.text = GameStateInfoStore.draw.rawValue
+        self.gameStatusLabel.text = GameStateInfoStore.gameOver.rawValue
+        self.upperLeftSubgrid.isUserInteractionEnabled = false
+        self.upperRightSubgrid.isUserInteractionEnabled = false
+        self.lowerLeftSubgrid.isUserInteractionEnabled = false
+        self.lowerRightSubgrid.isUserInteractionEnabled = false
+        self.rotationStackView.isHidden = false
+        self.gamePhase = .gameOver
+        
+        let player1Achievements = self.gameController.gameBoard.player1Profile.updateDraws()
+        let player2Achievements = self.gameController.gameBoard.player2Profile.updateDraws()
+        
+        if(!player1Achievements.isEmpty)
+        {
+            onAchievementEarned(playerProfile: self.gameController.gameBoard.player1Profile, achievementsEarned: player1Achievements)
+        }
+        if(!player2Achievements.isEmpty)
+        {
+            onAchievementEarned(playerProfile: self.gameController.gameBoard.player2Profile, achievementsEarned: player2Achievements)
+        }
+    }
+    
+    func onAchievementEarned(playerProfile: PlayerProfile, achievementsEarned: Array<Achievement>)
+    {
+        for achievement in achievementsEarned
+        {
+            let snackbarMessage = playerProfile.userName + " earned " + achievement.achievementTitle
+            let snackbarViewModel = SnackbarViewModel(type: .info, text: snackbarMessage, image: .init(systemName: "trophy.circle.fill"))
+            let snackbar = SnackbarView(viewModel: snackbarViewModel, frame: self.snackbarFrame, popUpFrame: self.snackbarPopUpFrame, duration: Duration.snackbarDuration.rawValue)
+            self.snackbarQueue.append(snackbar)
+        }
+    }
+    
+    func displaySnackbars()
+    {
+        if(!self.snackbarQueue.isEmpty)
+        {
+            var currentOffset: Double = 0
+            var copyQueue = self.snackbarQueue!
+            for snackbar in copyQueue
+            {
+                DispatchQueue.main.asyncAfter(deadline: .now() + currentOffset)
+                {
+                    snackbar.showSnackbar(view: self.view)
+                    self.snackbarQueue.removeAll(where: {$0 === snackbar})
+                }
+                currentOffset += Duration.snackbarDuration.rawValue //The snack bar will show up one after the other
+            }
+        }
+    }
+    
     enum GamePhase
     {
         case placeMarble
         case rotateSubgid
         case animationOccuring
         case aiTurn
+        case gameOver
     }
     
     enum Duration: Double
@@ -594,6 +758,7 @@ class GameBoardViewController: UIViewController
         case gridRotationDuration = 1.5 //Seconds
         case placeMarbleWait = 0.75 //Seconds
         case rotateSubgridWait = 1
+        case snackbarDuration = 3.5
     }
 }
 
@@ -623,6 +788,7 @@ extension GameBoardViewController: UICollectionViewDelegate
             do
             {
                 try self.gameController.placeMarble(rowIndex: cell.gameBoardRowIndex, columnIndex: cell.gameBoardColumnIndex)
+                onMarblePlace(rowIndex: cell.gameBoardRowIndex, columnIndex: cell.gameBoardColumnIndex)
                 cell.cellImageView.image = ImageAssetFactory.getGameBoardCellUIImage(cellType: cell.initialCellType, colour: self.gameController.gameBoard.currentTurnPlayerProfile.marbleColour)
                 
                 self.gamePhase = .rotateSubgid
