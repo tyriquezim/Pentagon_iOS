@@ -626,7 +626,7 @@ class GameBoardViewController: UIViewController
                 {
                     onAchievementEarned(playerProfile: self.gameController.gameBoard.player2Profile, achievementsEarned: achievements)
                 }
-                onPlayerMove(playerProfile: self.gameController.gameBoard.player1Profile) //Only counts placing a marble as a move on its own without rotation if it resulted in a win
+                
             }
             else
             {
@@ -638,7 +638,6 @@ class GameBoardViewController: UIViewController
                     {
                         onAchievementEarned(playerProfile: self.gameController.gameBoard.player1Profile, achievementsEarned: achievements)
                     }
-                    onPlayerMove(playerProfile: self.gameController.gameBoard.player2Profile) //Only counts placing a marble as a move on its own without rotation if it resulted in a win
                 }
             }
         }
@@ -649,6 +648,7 @@ class GameBoardViewController: UIViewController
                 onDraw()
             }
         }
+        onPlayerMove(playerProfile: self.gameController.gameBoard.player1Profile)
         displaySnackbars()
     }
     
