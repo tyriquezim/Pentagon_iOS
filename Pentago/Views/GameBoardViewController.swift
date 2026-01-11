@@ -118,6 +118,7 @@ class GameBoardViewController: UIViewController
         {_ in
             self.onSubgridRotate()
             //Updates the indices that get passed to the GameController.placeMarble function after rotation
+            
             if(self.gamePhase != .gameOver)
             {
                 for cell in self.selectedSubgridCollectionView!.visibleCells
@@ -331,7 +332,7 @@ class GameBoardViewController: UIViewController
                 }
             }
         }
-    
+        
         return rotationAnimator!
     }
     
@@ -451,7 +452,7 @@ class GameBoardViewController: UIViewController
         do
         {
             aiMoveInfo = try self.gameController.aiPlaceMarble()
-    
+            
             guard aiMoveInfo.rowIndex != nil, aiMoveInfo.columnIndex != nil else
             {
                 return
@@ -696,7 +697,7 @@ class GameBoardViewController: UIViewController
                 if(winner === self.gameController.gameBoard.player2Profile)
                 {
                     let achievements = self.gameController.gameBoard.player1Profile.updateLosses()
-                
+                    
                     if(!achievements.isEmpty)
                     {
                         onAchievementEarned(playerProfile: self.gameController.gameBoard.player1Profile, achievementsEarned: achievements)
@@ -723,7 +724,7 @@ class GameBoardViewController: UIViewController
         self.upperRightSubgrid.isUserInteractionEnabled = false
         self.lowerLeftSubgrid.isUserInteractionEnabled = false
         self.lowerRightSubgrid.isUserInteractionEnabled = false
-        self.rotationStackView.isHidden = false
+        self.rotationStackView.isHidden = true
         self.gamePhase = .gameOver
         
         let player1Achievements = self.gameController.gameBoard.player1Profile.updateDraws()

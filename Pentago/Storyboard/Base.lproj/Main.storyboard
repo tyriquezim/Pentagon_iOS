@@ -1026,7 +1026,7 @@
                                 </cells>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oxD-dG-F3P">
-                                <rect key="frame" x="36" y="569" width="150" height="150"/>
+                                <rect key="frame" x="36" y="566" width="150" height="150"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="7Sx-Er-s0r"/>
@@ -1173,7 +1173,7 @@
                                 </cells>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="epw-OQ-BH9">
-                                <rect key="frame" x="207" y="569" width="150" height="150"/>
+                                <rect key="frame" x="207" y="566" width="150" height="150"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="HlD-6v-IYh"/>
@@ -1342,13 +1342,13 @@
                         <constraints>
                             <constraint firstItem="TAo-nQ-aHS" firstAttribute="top" secondItem="rYr-RP-3cy" secondAttribute="bottom" constant="10" id="0Pw-x5-BeO"/>
                             <constraint firstItem="6QY-kn-rhF" firstAttribute="top" secondItem="trQ-lG-INI" secondAttribute="bottom" constant="15" id="32E-K1-xKn"/>
-                            <constraint firstItem="epw-OQ-BH9" firstAttribute="top" secondItem="kfg-dm-fkr" secondAttribute="bottom" constant="35" id="3RZ-8n-zZw"/>
+                            <constraint firstItem="epw-OQ-BH9" firstAttribute="top" secondItem="kfg-dm-fkr" secondAttribute="bottom" constant="32" id="3RZ-8n-zZw"/>
                             <constraint firstItem="ZuU-sI-k6Q" firstAttribute="centerX" secondItem="fKn-Iq-snB" secondAttribute="centerX" id="5ZD-Zf-1nK"/>
                             <constraint firstItem="LeH-sa-1Le" firstAttribute="trailing" secondItem="TAo-nQ-aHS" secondAttribute="trailing" constant="10" id="7fk-8b-7Kk"/>
                             <constraint firstItem="kfg-dm-fkr" firstAttribute="top" secondItem="TAo-nQ-aHS" secondAttribute="bottom" constant="180" id="9Tf-FH-MDs"/>
                             <constraint firstItem="LeH-sa-1Le" firstAttribute="trailing" secondItem="rYr-RP-3cy" secondAttribute="trailing" constant="10" id="9sl-S9-LOR"/>
                             <constraint firstItem="tVz-j4-dg1" firstAttribute="leading" secondItem="fKn-Iq-snB" secondAttribute="leadingMargin" constant="20" id="G9L-JE-1tr"/>
-                            <constraint firstItem="oxD-dG-F3P" firstAttribute="top" secondItem="tVz-j4-dg1" secondAttribute="bottom" constant="35" id="JeS-1x-VKc"/>
+                            <constraint firstItem="oxD-dG-F3P" firstAttribute="top" secondItem="tVz-j4-dg1" secondAttribute="bottom" constant="32" id="JeS-1x-VKc"/>
                             <constraint firstItem="rYr-RP-3cy" firstAttribute="top" secondItem="LeH-sa-1Le" secondAttribute="top" constant="15" id="NK0-zk-ber"/>
                             <constraint firstItem="Ofz-m3-qS6" firstAttribute="centerX" secondItem="fKn-Iq-snB" secondAttribute="centerX" id="P3Y-uk-dYH"/>
                             <constraint firstItem="tVz-j4-dg1" firstAttribute="top" secondItem="iyM-Ev-Ni7" secondAttribute="bottom" constant="180" id="PDe-bx-cfi"/>

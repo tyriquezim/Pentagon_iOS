@@ -163,7 +163,6 @@ class MainMenuViewController: UIViewController
         {
             fatalError("Failed to save PlayerProfiles")
         }
-            
     }
     
     enum ProfileSelectScreenDestination

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class EditProfileViewController: UIViewController
 {
@@ -51,7 +52,22 @@ class EditProfileViewController: UIViewController
         let deleteConfirmAction = UIAlertAction(title: "Yes", style: .destructive)
         {_ in
             self.sourceProfile.manager = nil //This manager will remove it automatically
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            let request: NSFetchRequest<PlayerEntity> = PlayerEntity.fetchRequest()
+            request.predicate = NSPredicate(format: "playerID == %@", self.sourceProfile.playerID as CVarArg)
+            
+            do
+            {
+                var player = try context.fetch(request)
+                context.delete(player[0])//Confident there is only one item in the list
+            }
+            catch
+            {
+                fatalError("Failed to delete PlayerEntity")
+            }
+            
             self.navigationController!.popViewController(animated: true)
+            self.sourceProfile.manager = nil
         }
         let deleteDenyAction = UIAlertAction(title: "No", style: .default)
         
